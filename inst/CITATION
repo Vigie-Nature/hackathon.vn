@@ -1,0 +1,10 @@
+citHeader("To cite hackaton.vn in publications use:")
+
+bibentry(
+  bibtype = "Manual",
+  title   = "hackaton.vn: {An} {R} package to ...",
+  author  = c(person("Pretet Mael")),
+  year    = "2025",
+  note    = "R package version 0.0.0.9000",
+  url     = "https://github.com/maelpretet/hackaton.vn"
+)
