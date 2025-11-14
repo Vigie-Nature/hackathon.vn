@@ -4,10 +4,10 @@
 # --------------------------------------------
  
 cff-version: 1.2.0
-message: 'To cite package "hackaton.vn" in publications use:'
+message: 'To cite package "hackathon.vn" in publications use:'
 type: software
 license: GPL-2.0-or-later
-title: 'hackaton.vn: The Title of the Project'
+title: 'hackathon.vn: The Title of the Project'
 version: 0.0.0.9000
 abstract: A paragraph providing a full description of the project (on several lines...)
 authors:
@@ -17,14 +17,14 @@ authors:
   orcid: https://orcid.org/orcid
 preferred-citation:
   type: manual
-  title: 'hackaton.vn: An R package to ...'
+  title: 'hackathon.vn: An R package to ...'
   authors:
   - name: Pretet Mael
   year: '2025'
   notes: R package version 0.0.0.9000
-  url: https://github.com/maelpretet/hackaton.vn
-repository-code: https://github.com/maelpretet/hackaton.vn
-url: https://github.com/maelpretet/hackaton.vn
+  url: https://github.com/maelpretet/hackathon.vn
+repository-code: https://github.com/maelpretet/hackathon.vn
+url: https://github.com/maelpretet/hackathon.vn
 contact:
 - family-names: Pretet
   given-names: Mael

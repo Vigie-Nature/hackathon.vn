@@ -1,18 +1,19 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# hackaton.vn <img src="man/figures/package-sticker.png" align="right" style="float:right; height:120px;"/>
+# hackathon.vn <img src="man/figures/package-sticker.png" align="right" style="float:right; height:120px;"/>
 
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/hackaton.vn)](https://CRAN.R-project.org/package=hackaton.vn)
+status](https://www.r-pkg.org/badges/version/hackathon.vn)](https://CRAN.R-project.org/package=hackathon.vn)
 [![R CMD
-Check](https://github.com/maelpretet/hackaton.vn/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/maelpretet/hackaton.vn/actions/workflows/R-CMD-check.yaml)
-[![Website](https://github.com/maelpretet/hackaton.vn/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/maelpretet/hackaton.vn/actions/workflows/pkgdown.yaml)
+Check](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/R-CMD-check.yaml)
+[![Website](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/pkgdown.yaml)
 [![Test
-coverage](https://github.com/maelpretet/hackaton.vn/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/maelpretet/hackaton.vn/actions/workflows/test-coverage.yaml)
-[![codecov](https://codecov.io/gh/maelpretet/hackaton.vn/branch/master/graph/badge.svg)](https://codecov.io/gh/maelpretet/hackaton.vn)
-[![License: GPL (&gt;=
+coverage](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/Vigie-Nature/hackathon.vn/actions/workflows/test-coverage.yaml)
+[![codecov](https://codecov.io/gh/Vigie-Nature/hackathon.vn/branch/master/graph/badge.svg)](https://codecov.io/gh/Vigie-Nature/hackathon.vn)
+[![License: GPL (\>=
 2)](https://img.shields.io/badge/License-GPL%20%28%3E%3D%202%29-blue.svg)](https://choosealicense.com/licenses/gpl-2.0/)
 <!-- badges: end -->
 
@@ -30,62 +31,66 @@ coverage](https://github.com/maelpretet/hackaton.vn/actions/workflows/test-cover
 
 ## Overview
 
-The R package `hackaton.vn`… **{{ DESCRIBE YOUR PACKAGE }}**
+The R package `hackathon.vn`… **{{ DESCRIBE YOUR PACKAGE }}**
 
 ## Features
 
-The main purpose of `hackaton.vn` is to… **{{ DESCRIBE THE MAIN FEATURES
-}}**
+The main purpose of `hackathon.vn` is to… **{{ DESCRIBE THE MAIN
+FEATURES }}**
 
 ## Installation
 
 You can install the development version from
 [GitHub](https://github.com/) with:
 
-    ## Install < remotes > package (if not already installed) ----
-    if (!requireNamespace("remotes", quietly = TRUE)) {
-      install.packages("remotes")
-    }
+``` r
+## Install < remotes > package (if not already installed) ----
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
 
-    ## Install < hackaton.vn > from GitHub ----
-    remotes::install_github("maelpretet/hackaton.vn")
+## Install < hackathon.vn > from GitHub ----
+remotes::install_github("Vigie-Nature/hackathon.vn")
+```
 
-Then you can attach the package `hackaton.vn`:
+Then you can attach the package `hackathon.vn`:
 
-    library("hackaton.vn")
+``` r
+library("hackathon.vn")
+```
 
 ## Get started
 
-For an overview of the main features of `hackaton.vn`, please read the
+For an overview of the main features of `hackathon.vn`, please read the
 [Get
-started](https://maelpretet.github.io/hackaton.vn/articles/hackaton.vn.html)
+started](https://Vigie-Nature.github.io/hackathon.vn/articles/hackathon.vn.html)
 vignette.
 
 ## Long-form documentations
 
-`hackaton.vn` provides **{{ NUMBER OF VIGNETTES }}** vignettes to learn
+`hackathon.vn` provides **{{ NUMBER OF VIGNETTES }}** vignettes to learn
 more about the package:
 
--   the [Get
-    started](https://maelpretet.github.io/hackaton.vn/articles/hackaton.vn.html)
-    vignette describes the core features of the package
--   **{{ LIST ADDITIONAL VIGNETTES }}**
+- the [Get
+  started](https://Vigie-Nature.github.io/hackathon.vn/articles/hackathon.vn.html)
+  vignette describes the core features of the package
+- **{{ LIST ADDITIONAL VIGNETTES }}**
 
 ## Citation
 
-Please cite `hackaton.vn` as:
+Please cite `hackathon.vn` as:
 
-> Pretet Mael (2025) hackaton.vn: An R package to **{{ TITLE }}**. R
+> Pretet Mael (2025) hackathon.vn: An R package to **{{ TITLE }}**. R
 > package version 0.0.0.9000.
-> <https://github.com/maelpretet/hackaton.vn/>
+> <https://github.com/Vigie-Nature/hackathon.vn/>
 
 ## Contributing
 
 All types of contributions are encouraged and valued. For more
 information, check out our [Contributor
-Guidelines](https://github.com/maelpretet/hackaton.vn/blob/main/CONTRIBUTING.md).
+Guidelines](https://github.com/Vigie-Nature/hackathon.vn/blob/main/CONTRIBUTING.md).
 
-Please note that the `hackaton.vn` project is released with a
+Please note that the `hackathon.vn` project is released with a
 [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

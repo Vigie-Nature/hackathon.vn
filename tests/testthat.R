@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(hackaton.vn)
+library(hackathon.vn)
 
-test_check("hackaton.vn")
+test_check("hackathon.vn")
