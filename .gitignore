@@ -19,3 +19,6 @@
 # User-specific files ----
 README.html
 inst/doc
+
+# Variables d'environnement
+.env
