@@ -12,6 +12,8 @@
 #' @return A dataframe
 #'
 #' @examples
+#' library(dplyr)
+#' 
 #' lapply(file.path("R", dir("R")), source)
 #' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
 #' df_participation_aspifaune <- fct_tableau_participation(df_vn = aspifaune,
@@ -24,11 +26,11 @@ fct_tableau_participation <- function(df_vn,
   
   df_participation = df_vn %>%
     # Créer une colonne année
-    mutate(session_year = strftime(!!sym(col_date), "%Y")) %>%
+    dplyr::mutate(session_year = strftime(!!sym(col_date), "%Y")) %>%
     # Grouper par année
-    group_by(session_year) %>%
+    dplyr::group_by(session_year) %>%
     # Compter le nombre de participants uniques 
-    summarise(nparticipants = n_distinct(!!sym(col_user))) %>%
+    dplyr::summarise(nparticipants = n_distinct(!!sym(col_user))) %>%
     # Transformer en data.frame
     as.data.frame() 
   

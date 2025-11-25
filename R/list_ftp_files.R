@@ -1,8 +1,4 @@
-# library(httr2)
-# library(xml2)
-# library(rvest)
-
-# Fonction pour lister les fichiers du FTP
+#' Fonction pour lister les fichiers du FTP
 #'
 #' @param chemin 
 #' 
@@ -14,6 +10,9 @@
 #'
 #'
 #' @examples
+#' library(httr2)
+#' library(rvest)
+#' library(xml2)
 #' list_ftp_files()
 #' 
 list_ftp_files <- function(chemin = "") {
