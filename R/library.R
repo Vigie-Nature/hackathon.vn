@@ -1,8 +1,10 @@
-library(dplyr)
-library(httr2)
-library(xml2)
-library(rvest)
-library(httr2)
 library(data.table)
+library(dplyr)
 library(ggplot2)
+library(httr2)
 library(rvest)
+library(scales)
+library(xml2)
+
+
+
