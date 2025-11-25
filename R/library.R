@@ -1,0 +1,7 @@
+library(dplyr)
+library(httr2)
+library(xml2)
+library(rvest)
+library(httr2)
+library(data.table)
+library(ggplot2)
