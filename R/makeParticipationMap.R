@@ -1,4 +1,3 @@
-
 #' makeParticipationMap
 #' 
 #' A function that returns a map of the participations 
@@ -7,13 +6,44 @@
 #' @param path : a `string` specifying the folder where the file should be saved
 #' @param filename : a `string` specifying the name of the file to be saved
 #' @param point_color : a `string` specifying the color to use for the plot
-#' @param path : a `int` specifying the shape of the points
+#' @param point_size : a `int` specifying the size of the points
+#' @param year : NULL, a single year (int), or an interval of years (vector)
 #' 
+
 makeParticipationMap <- function(data, path, filename = "map_sessions.png",
-                            point_color = "lightblue", point_size = 2){
+                                 point_color = "lightblue", point_size = 2,
+                                 year = NULL){
+
+
   
-  if(!("longitude" %in% colnames(data) & "latitude" %in% colnames(data))){
-    stop("Les colonnes longitude et latitude sont manquantes.")
+  ###################
+  # YEAR FILTERING  #
+  ###################
+  
+  if(!is.null(year)){
+    
+    # Extraire l'année
+    data <- data %>%
+      mutate(
+        session_date = as.Date(session_date),
+        year_extracted = as.integer(format(session_date, "%Y"))
+      )
+    
+    # année simple : year = 2020
+    if(length(year) == 1){
+      data <- data %>% filter(year_extracted == year)
+      
+      # intervalle : 2015:2020 ou c(2015, 2020)
+    } else if(length(year) >= 2){
+      yr_min <- min(year)
+      yr_max <- max(year)
+      data <- data %>% filter(between(year_extracted, yr_min, yr_max))
+    }
+  }
+  
+  # Vérification après filtrage
+  if(nrow(data) == 0){
+    stop("Aucune donnée disponible pour l'année ou l'intervalle fourni.")
   }
   
   ###################
@@ -37,18 +67,15 @@ makeParticipationMap <- function(data, path, filename = "map_sessions.png",
   
   plot <- ggplot2::ggplot(dataFrance, ggplot2::aes(long, lat)) +
     
-    # France shape
     ggplot2::geom_polygon(ggplot2::aes(group = group),
                           col = "darkgray", fill = "white") +
     
-    # Sessions points + legend
     ggplot2::geom_point(
       data = dataSess,
       aes(x = longitude, y = latitude, color = "Participations"),
       size = point_size, alpha = 0.9
     ) +
     
-    # Legend for points
     ggplot2::scale_color_manual(
       name = "Légende",
       values = c("Participations" = point_color)
