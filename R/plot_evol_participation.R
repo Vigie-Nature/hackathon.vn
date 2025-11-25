@@ -14,7 +14,7 @@ plot_evol_participation = function(dt, time, axe_y) {
   plot_evol = 
     ggplot2::ggplot(dt, aes(x = !!sym(time), y = !!sym(axe_y))) +
     ggplot2::geom_bar(stat = "identity") +
-    theme_minimal() 
+    ggplot2::theme_minimal() 
   
   return(plot_evol)
   
