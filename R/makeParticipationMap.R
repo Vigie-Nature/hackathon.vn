@@ -1,39 +1,72 @@
 #' makeParticipationMap
 #' 
-#' A function that returns a map of the participations 
+#' Crée et sauvegarde une carte des participations par site.
 #' 
-#' @param data : a `data.frame` containing all species observations
-#' @param path : a `string` specifying the folder where the file should be saved
-#' @param filename : a `string` specifying the name of the file to be saved
-#' @param point_color : a `string` specifying the color to use for the plot
-#' @param point_size : a `int` specifying the size of the points
-#' @param year : NULL, a single year (int), or an interval of years (vector)
+#' Cette fonction affiche les sites de relevé (latitude/longitude) sur la carte de la France. 
+#' Les points peuvent être coloriés de façon fixe ou selon le nombre d'années distinctes 
+#' où chaque site a été observé (gradient inter-annuel).
 #' 
-
+#' @param data A `data.frame` contenant les observations, avec au minimum les colonnes :
+#'   - `longitude` : longitude du site
+#'   - `latitude` : latitude du site
+#'   - `session_date` : date de la session au format `"YYYY-MM-DD"`
+#'   - `session_id` : identifiant unique de la session
+#' @param path `string` spécifiant le dossier où le fichier doit être sauvegardé
+#' @param filename `string` nom du fichier PNG de sortie (défaut `"map_sessions.png"`)
+#' @param point_color `string` couleur fixe des points si `color_by_year_count = FALSE` (défaut `"lightblue"`)
+#' @param point_size `numeric` taille des points (défaut 2)
+#' @param year NULL (toutes les années), un entier (ex: 2021) ou un vecteur représentant 
+#'   un intervalle d'années (ex: `2015:2020`) pour filtrer les données
+#' @param color_by_year_count `logical` si TRUE, applique un gradient de couleur selon le 
+#'   nombre d'années distinctes où le site a été observé (défaut FALSE)
+#' 
+#' @return L'objet ggplot créé
+#' 
+#' @examples
+#' # Carte classique toutes années
+#' makeParticipationMap(data, path = "outputs/")
+#' 
+#' # Carte pour une seule année
+#' makeParticipationMap(data, path = "outputs/", year = 2021)
+#' 
+#' # Carte pour un intervalle d'années
+#' makeParticipationMap(data, path = "outputs/", year = 2018:2021)
+#' 
+#' # Carte avec gradient selon nombre d'années distinctes
+#' makeParticipationMap(data, path = "outputs/", color_by_year_count = TRUE)
+#' 
 makeParticipationMap <- function(data, path, filename = "map_sessions.png",
                                  point_color = "lightblue", point_size = 2,
-                                 year = NULL){
-
-
+                                 year = NULL, color_by_year_count = FALSE){
+  
+  library(dplyr)
+  library(ggplot2)
+  
+  if(!("longitude" %in% colnames(data) & "latitude" %in% colnames(data))){
+    stop("Les colonnes longitude et latitude sont manquantes.")
+  }
+  
+  if(!("session_date" %in% colnames(data))){
+    stop("La colonne 'session_date' est manquante dans les données.")
+  }
+  
+  ##############################
+  #   DATE PARSING & YEAR      #
+  ##############################
+  
+  data <- data %>%
+    mutate(
+      session_date = as.Date(session_date),
+      year_extracted = as.integer(format(session_date, "%Y"))
+    )
   
   ###################
   # YEAR FILTERING  #
   ###################
   
   if(!is.null(year)){
-    
-    # Extraire l'année
-    data <- data %>%
-      mutate(
-        session_date = as.Date(session_date),
-        year_extracted = as.integer(format(session_date, "%Y"))
-      )
-    
-    # année simple : year = 2020
     if(length(year) == 1){
       data <- data %>% filter(year_extracted == year)
-      
-      # intervalle : 2015:2020 ou c(2015, 2020)
     } else if(length(year) >= 2){
       yr_min <- min(year)
       yr_max <- max(year)
@@ -41,7 +74,6 @@ makeParticipationMap <- function(data, path, filename = "map_sessions.png",
     }
   }
   
-  # Vérification après filtrage
   if(nrow(data) == 0){
     stop("Aucune donnée disponible pour l'année ou l'intervalle fourni.")
   }
@@ -50,10 +82,19 @@ makeParticipationMap <- function(data, path, filename = "map_sessions.png",
   # DATA FORMATTING #
   ###################
   
-  data <- data[!is.na(data$longitude) & !is.na(data$latitude), ]
+  data <- data %>% filter(!is.na(longitude), !is.na(latitude))
   
-  # Unique sessions only
-  dataSess <- unique(data[, c("session_id", "longitude", "latitude")])
+  # Unique sessions
+  dataSess <- data %>% distinct(session_id, longitude, latitude, year_extracted)
+  
+  # Gradient optionnel : calcul du nombre d'années distinctes par site
+  if(color_by_year_count){
+    dataSess <- dataSess %>%
+      group_by(longitude, latitude) %>%
+      summarise(year_count = n_distinct(year_extracted), .groups = "drop")
+  } else {
+    dataSess$year_count <- NULL
+  }
   
   ############################
   #   FRANCE POLYGON        #
@@ -65,31 +106,40 @@ makeParticipationMap <- function(data, path, filename = "map_sessions.png",
   # MAP CREATION #
   ################
   
-  plot <- ggplot2::ggplot(dataFrance, ggplot2::aes(long, lat)) +
+  if(color_by_year_count){
+    plot <- ggplot2::ggplot(dataFrance, ggplot2::aes(long, lat)) +
+      geom_polygon(aes(group = group), col = "darkgray", fill = "white") +
+      geom_point(
+        data = dataSess,
+        aes(x = longitude, y = latitude, color = year_count),
+        size = point_size, alpha = 0.9
+      ) +
+      scale_color_viridis_c(name = "Nb d'années") +
+      theme_void() +
+      coord_quickmap(
+        xlim = c(min(dataSess$longitude), max(dataSess$longitude)),
+        ylim = c(min(dataSess$latitude), max(dataSess$latitude))
+      ) +
+      theme(legend.position = "bottom",
+            legend.text = element_text(size = 18))
     
-    ggplot2::geom_polygon(ggplot2::aes(group = group),
-                          col = "darkgray", fill = "white") +
-    
-    ggplot2::geom_point(
-      data = dataSess,
-      aes(x = longitude, y = latitude, color = "Participations"),
-      size = point_size, alpha = 0.9
-    ) +
-    
-    ggplot2::scale_color_manual(
-      name = "Légende",
-      values = c("Participations" = point_color)
-    ) +
-    
-    ggplot2::theme_void() +
-    ggplot2::coord_quickmap(
-      xlim = c(min(dataSess$longitude), max(dataSess$longitude)),
-      ylim = c(min(dataSess$latitude), max(dataSess$latitude))
-    ) +
-    ggplot2::theme(
-      legend.position = "bottom",
-      legend.text = ggplot2::element_text(size = 18)
-    )
+  } else {
+    plot <- ggplot2::ggplot(dataFrance, ggplot2::aes(long, lat)) +
+      geom_polygon(aes(group = group), col = "darkgray", fill = "white") +
+      geom_point(
+        data = dataSess,
+        aes(x = longitude, y = latitude, color = "Participations"),
+        size = point_size, alpha = 0.9
+      ) +
+      scale_color_manual(name = "Légende", values = c("Participations" = point_color)) +
+      theme_void() +
+      coord_quickmap(
+        xlim = c(min(dataSess$longitude), max(dataSess$longitude)),
+        ylim = c(min(dataSess$latitude), max(dataSess$latitude))
+      ) +
+      theme(legend.position = "bottom",
+            legend.text = element_text(size = 18))
+  }
   
   ###############
   # SAVE PLOT   #
