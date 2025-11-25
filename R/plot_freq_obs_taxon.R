@@ -1,7 +1,9 @@
 
 #' Title : plot_freq_obs_taxon
-#' Fonction qui renvoit un plot affichant les n taxons les plus fréquemments observés 
-#' sur les différentes sessions. 
+#' Fonction qui renvoit un plot affichant les n taxons les plus frequemments observes 
+#' sur les differentes sessions. On considere ici le pourcentage de sessions ou le 
+#' taxon a ete observe, pas son abondance i.e. on ne prend pas en compte si le taxon 
+#' a ete observe plusieurs fois au cours d'une session.
 #'
 #'
 #' @param dt un data frame contenant une colonne session_id et une colonne taxon
