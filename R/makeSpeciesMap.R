@@ -8,7 +8,7 @@
 #' @param interest : a 1 or 2-elements `vector` containing the response variable
 #' @param path : a `string` specifying the folder where the file should be saved
 #' 
-makeMap <- function(data, speciesList, interestVar, path){
+makeSpeciesMap <- function(data, speciesList, interestVar, path){
   
   if("longitude" %in% colnames(data) & "latitude" %in% colnames(data)){
     
