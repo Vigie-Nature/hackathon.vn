@@ -1,5 +1,15 @@
-
-
+#' Histogramme de la distribution des données selon le jour de la semaine
+#'
+#' @param file a character of length 1indicating the file name
+#' 
+#' @description visualise la distribution des données selon le jour de la semaine, permet notamment d'en savoir plus sur la sociologie de la participation
+#'
+#' @return a ggplot2 histogram (or just a warning if session_date column is missing)
+#' 
+#'
+#' @examples
+#' plot_JourDeLaSemaine("export_propage.csv")
+#' 
 plot_JourDeLaSemaine <- function(file){
   
   #DataVN=download_from_ftp(nom_fichier=paste0("export_",Observatoire,".csv"))
