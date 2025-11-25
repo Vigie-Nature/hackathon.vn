@@ -1,5 +1,5 @@
 
-#' makeMap
+#' makeSpeciesMap
 #' 
 #' A function that returns a map with occurrence data 
 #' 
