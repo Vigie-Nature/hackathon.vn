@@ -1,6 +1,8 @@
+library(data.table)
 library(dplyr)
-library(httr2)
-library(xml2)
-library(rvest)
-library(lubridate)
 library(ggplot2)
+library(httr2)
+library(lubridate)
+library(rvest)
+library(scales)
+
