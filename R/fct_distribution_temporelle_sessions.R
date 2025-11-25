@@ -1,4 +1,4 @@
-#' Distribution temporelle du nombre de session d'observation
+#' Distribution temporelle du nombre de sessions d'observation
 #' 
 #' @description
 #' \code{fct_distribution_temporelle_sessions} est une fonction utilisée pour visualiser, selon le paramètre défini, la distribution annelle ou mensuelle du nombre de sessions d'observation. Elle génère un diagramme en barres où l’axe des x représente les années ou les mois, et l’axe des y indique le nombre de sessions d’observation.
