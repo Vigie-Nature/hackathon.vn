@@ -20,15 +20,14 @@
 #' 
 
 download_from_ftp <- function(nom_fichier) {
-  
   requete <- httr2::request(paste0(Sys.getenv('SITE_NAME'), nom_fichier)) |> 
-    req_auth_basic(Sys.getenv('FTP_USER'), 
-                   password = Sys.getenv('FTP_PASSWORD')) |>
-    req_perform() |> resp_body_raw()
+    httr2::req_auth_basic(Sys.getenv('HTTPS_USER'), 
+                   password = Sys.getenv('HTTPS_PASSWORD')) |>
+    httr2::req_perform() |> httr2::resp_body_raw()
   
   
   
-  df_serveur <- data.table::fread(requete)
+  df_serveur <- readr::read_csv2(requete)
   
   return(df_serveur)
 }
