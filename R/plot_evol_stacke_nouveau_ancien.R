@@ -9,8 +9,12 @@
 #' @returns plot avec le nombre de sites ou user en fonction du temps
 #' @examples
 #' 
-#' plot_aspifaune = plot_evol_stacke_nouveau_ancien(df_vn = aspifaune, site_ou_participant = "user_id", time = "session_date")
 #' 
+#' @examples
+#' lapply(file.path("R", dir("R")), source)
+#' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
+#' plot_aspifaune <- plot_evol_stacke_nouveau_ancien(df_vn = aspifaune, site_ou_participant = "user_id", time = "session_date")
+#' print(plot_aspifaune)
 #' 
 plot_evol_stacke_nouveau_ancien = function(df_vn, site_ou_participant, time) {
   
