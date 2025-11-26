@@ -1,7 +1,7 @@
-#' Distribution temporelle du nombre de sessions d'observation
+#' Distribution temporelle (annuelle ou mensuelle) du nombre de sessions d'observation
 #' 
 #' @description
-#' \code{fct_distribution_temporelle_sessions} est une fonction utilisée pour visualiser, selon le paramètre défini, la distribution annelle ou mensuelle du nombre de sessions d'observation. Elle génère un diagramme en barres où l’axe des x représente les années ou les mois, et l’axe des y indique le nombre de sessions d’observation.
+#' \code{plot_distrib_temporelle_sessions} est une fonction utilisée pour visualiser, selon le paramètre défini, la distribution annelle ou mensuelle du nombre de sessions d'observation. Elle génère un diagramme en barres où l’axe des x représente les années ou les mois, et l’axe des y indique le nombre de sessions d’observation.
 #' 
 #' @param data dataframe ; jeu de données d'un des programmes Vigie-Nature accessible depuis le ftp
 #' @param periode chaine de caracteres ; par défaut "\code{annee}". La valeur de ce paramètre peut être soit "\code{annee}", soit "\code{mois}". D'autres entrées donneront une erreur.
@@ -15,10 +15,10 @@
 #' Sys.getenv("FTP_USER")
 #' source("R/download_from_ftp.R")
 #' df <- download_from_ftp("export_qubs_aspifaune.csv")
-#' p <- fct_distribution_temporelle_sessions(data = df, periode = "annee")
+#' p <- plot_distrib_temporelle_sessions(data = df, periode = "annee")
 #' print(p)
 
-fct_distribution_temporelle_sessions <- function(data, periode="annee"){
+plot_distrib_temporelle_sessions <- function(data, periode="annee"){
   # Preparation des parametres
   periode <- tolower(periode) # "annee" ou "mois
   # Preparation des donnees ----
