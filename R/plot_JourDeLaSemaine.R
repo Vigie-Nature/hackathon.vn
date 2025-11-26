@@ -1,6 +1,8 @@
 #' Histogramme de la distribution des données selon le jour de la semaine
 #'
-#' @param file a character of length 1indicating the file name
+#' @param df_vn un dataframe avec les donnees d'un export standard VN
+#' 
+#' @param nom_observatoire character string avec le nom de l'observatoire tel qu'il doit s'afficher dans la figure 
 #' 
 #' @description visualise la distribution des données selon le jour de la semaine, permet notamment d'en savoir plus sur la sociologie de la participation
 #'
@@ -8,22 +10,20 @@
 #' 
 #'
 #' @examples
-#' plot_JourDeLaSemaine("export_propage.csv")
+#' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
+#' plot_JourDeLaSemaine(df_vn = aspifaune)
 #' 
-plot_JourDeLaSemaine <- function(file){
-  
-  #DataVN=download_from_ftp(nom_fichier=paste0("export_",Observatoire,".csv"))
-  DataVN=download_from_ftp(nom_fichier=file)
-  
-  #extraire le nom de l'observatoire
-  Observatoire=gsub("export_","",file)
-  Observatoire=gsub(".csv","",Observatoire)
+#' # Utiliser l'argument nom_observatoire pour l'ajouter dans le titre du graphique
+#' plot_JourDeLaSemaine(df_vn = aspifaune, nom_observatoire = "(Qubs - Aspifaune)")
+#' 
+
+plot_JourDeLaSemaine <- function(df_vn, nom_observatoire= ""){
   
   # names(DataVN)
   # DataVN$session_date
-  if("session_date" %in% colnames(DataVN)){
+  if("session_date" %in% colnames(df_vn)){
     # Extraire le jour de la semaine à partir de session_date
-    DataVN <- DataVN %>%
+    DataVN <- df_vn %>%
       mutate(
         jour_semaine = weekdays(as.Date(session_date)),
         # Créer un facteur ordonné pour avoir l'ordre lundi-dimanche
@@ -43,7 +43,7 @@ plot_JourDeLaSemaine <- function(file){
     Graph=ggplot(repartition, aes(x = jour_semaine_ordre, y = n)) +
       geom_col(fill = "steelblue") +
       labs(
-        title = paste("Répartition des données par jour de la semaine -",Observatoire),
+        title = paste("Répartition des données par jour de la semaine", nom_observatoire),
         x = "Jour de la semaine",
         y = "Nombre d'observations"
       ) +
