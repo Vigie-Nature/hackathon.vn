@@ -21,6 +21,7 @@
 #' 
 
 download_from_ftp <- function(nom_fichier) {
+  readRenviron(".env")
   requete <- httr2::request(paste0(Sys.getenv('SITE_NAME'), nom_fichier)) |> 
     httr2::req_auth_basic(Sys.getenv('HTTPS_USER'), 
                    password = Sys.getenv('HTTPS_PASSWORD')) |>
