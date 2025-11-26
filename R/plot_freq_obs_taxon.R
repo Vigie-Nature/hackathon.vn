@@ -10,8 +10,14 @@
 #' @param n un parametre numeric = nombre de taxons que l'on veut afficher sur le graphe
 #'
 #' @returns un plot qui affiche les taxons en fonction de leur fréquence d'observation
-#' @export
+
+#' 
+#' @examples
+#' lapply(file.path("R", dir("R")), source)
+#' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
 #'
+#' p <- plot_freq_obs_taxon(aspifaune, n = 5)
+#' print(p)
 #'
 plot_freq_obs_taxon = function(dt, n = "10000000") {
   
