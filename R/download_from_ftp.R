@@ -29,6 +29,8 @@ download_from_ftp <- function(nom_fichier) {
   
   
   df_serveur <- readr::read_csv2(requete)
-  
+  if(ncol(df_serveur)<=1){
+    df_serveur <- readr::read_csv(requete)
+  }
   return(df_serveur)
 }
