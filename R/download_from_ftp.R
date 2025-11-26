@@ -14,8 +14,9 @@
 #' @export
 #'
 #' @examples
-#' download_from_ftp("export_vigie_flore.csv")
-#' 
+#' library(httr2)
+#' library(readr)
+#' download_from_ftp("export_propage.csv")
 #' 
 #' 
 
