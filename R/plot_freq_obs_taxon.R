@@ -23,14 +23,14 @@ plot_freq_obs_taxon = function(dt, n = "10000000") {
   
   # fréquence d'observation : % de sessions où le taxon est vu
   dt_freq = dt %>%
-    select(session_id, taxon) %>%
-    filter(!is.na(taxon)) %>%
+    dplyr::select(session_id, taxon) %>%
+    dplyr::filter(!is.na(taxon)) %>%
     unique() %>%
     table() %>%
     as.data.frame() %>%
-    group_by(taxon) %>%
+    dplyr::group_by(taxon) %>%
     dplyr::reframe(freq_taxon = round(100 * sum(Freq) / dplyr::n_distinct(session_id), 1)) %>%
-    ungroup() %>% 
+    dplyr::ungroup() %>% 
     dplyr::arrange(dplyr::desc(freq_taxon))
   
   
@@ -38,7 +38,7 @@ plot_freq_obs_taxon = function(dt, n = "10000000") {
   if (length(dt_freq$taxon) >= n) {
     
     # on récupère les n lignes d'intérêt
-    dt_freq = slice_head(dt_freq, n = n)
+    dt_freq = dplyr::slice_head(dt_freq, n = n)
     
   }
   
