@@ -13,7 +13,7 @@
 #' @export
 #'
 #'
-plot_freq_obs_taxon = function(dt, n) {
+plot_freq_obs_taxon = function(dt, n = "10000000") {
   
   # fréquence d'observation : % de sessions où le taxon est vu
   dt_freq = dt %>%
