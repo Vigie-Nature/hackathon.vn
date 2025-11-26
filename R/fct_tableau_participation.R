@@ -1,4 +1,4 @@
-#' Créer un tableau de participation
+#' 
 #' 
 #' @param df_vn a dataframe
 #' @param col_date a character/string
@@ -16,6 +16,18 @@
 #' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
 #' df_participation_aspifaune <- fct_tableau_participation(df_vn = aspifaune,
 #'                                                         pretty_names = FALSE)
+#' fct_tableau_participation(aspifaune)
+#'
+#' fct_tableau_participation(aspifaune,  by_year = FALSE, by_month = TRUE)
+#'
+#' fct_tableau_participation(aspifaune, count_variable = 'site',  by_year = FALSE, by_month = TRUE)
+#'
+#' fct_tableau_participation(aspifaune, count_variable = 'user')
+#'
+#' res <- fct_tableau_participation(aspifaune, by_year = FALSE, add_school_year = TRUE)
+#' res$school_year <- label_school_year(res$school_year)
+#' res
+
 
 df_vn = aspifaune
 count_variable = 'session'
@@ -29,11 +41,33 @@ col_date = "session_date"
 col_count_variable = "user_id"
 pretty_names = FALSE
 
+#' Créer un tableau de participation
+#'
+#' @param df_vn a dataframe
+#' @param count_variable 
+#' @param by_year 
+#' @param by_month 
+#' @param by_day 
+#' @param add_week 
+#' @param add_school_year 
+#' @param group_variable 
+#' @param col_date 
+#' @param col_count_variable 
+#' @param pretty_names 
+#' 
+#' #' @description
+#' Cette fonction permet de generer un tableau de participation
+#' avec en option une modification des noms de colonnes en output
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 fct_tableau_participation <- function(df_vn,
                                       count_variable = 'session',
                                       by_year = TRUE,
-                                      by_month = TRUE,
-                                      by_day = TRUE,
+                                      by_month = FALSE,
+                                      by_day = FALSE,
                                       add_week = FALSE,
                                       add_school_year = FALSE,
                                       group_variable = NULL,
@@ -84,7 +118,7 @@ fct_tableau_participation <- function(df_vn,
   # add school year
   if(add_school_year){
     df_vn$school_year <- calc_school_year(df_vn[[col_date]])
-    group_variable = c(group_variable, "week")
+    group_variable = c(group_variable, "school_year")
   }
   
   # count variable according to grouping preferences
@@ -97,13 +131,14 @@ fct_tableau_participation <- function(df_vn,
     as.data.frame() 
   
   # rename variable
-  colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("nb_", count_variable)
   
+  if(pretty_names){
+    colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("nb_", count_variable)
+  } else {
+    colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("Nombre de ", count_variable)
+  }
   
-  # if (pretty_names) {
-  #   # Modifier les noms des colonnes
-  #   colnames(df_participation) = c("Années", "Nombre de participants")
-  # }
   
   return(df_participation)
 }
+
