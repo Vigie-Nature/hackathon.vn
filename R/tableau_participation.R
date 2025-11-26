@@ -20,21 +20,30 @@
 #' @export
 #'
 #' @examples
-#' #' lapply(file.path("R", dir("R")), source)
+#' invisible(lapply(file.path("R", dir("R")), source))
 #' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
-#' df_participation_aspifaune <- fct_tableau_participation(df_vn = aspifaune,
+#' df_participation_aspifaune <- tableau_participation(df_vn = aspifaune,
 #'                                                         pretty_names = FALSE)
-#' fct_tableau_participation(aspifaune)
+#' tableau_participation(aspifaune)
 #'
-#' fct_tableau_participation(aspifaune,  by_year = FALSE, by_month = TRUE)
+#' tableau_participation(aspifaune,  by_year = FALSE, by_month = TRUE)
 #'
-#' fct_tableau_participation(aspifaune, count_variable = 'site',  by_year = FALSE, by_month = TRUE)
+#' tableau_participation(aspifaune, count_variable = 'site',  by_year = FALSE, by_month = TRUE)
 #'
-#' fct_tableau_participation(aspifaune, count_variable = 'user')
+#' tableau_participation(aspifaune, count_variable = 'user')
 #'
-#' res <- fct_tableau_participation(aspifaune, by_year = FALSE, add_school_year = TRUE)
+#' res <- tableau_participation(aspifaune, by_year = FALSE, add_school_year = TRUE)
 #' res$school_year <- label_school_year(res$school_year)
 #' res
+#' 
+#' 
+#' tableau_participation(aspifaune, count_variable = 'jour')
+#' 
+#' 
+#' 
+
+
+
 
 tableau_participation <- function(df_vn,
                                       count_variable = 'session',
@@ -48,15 +57,16 @@ tableau_participation <- function(df_vn,
                                       col_count_variable = "user_id",
                                       pretty_names = TRUE) {
   
-  if (!count_variable %in% c("session", "user", "site")){
-    stop("L'argument count_variable doit prendre l'une des valeurs suivantes : 'session', 'user', 'site'")
+  if (!count_variable %in% c("session", "user", "site", "jour")){
+    stop("L'argument count_variable doit prendre l'une des valeurs suivantes : 'session', 'user', 'site', 'jour'")
   }
   
   # switch between 
   col_count_variable <- switch (count_variable,
                                 session = "session_id",
                                 user = "user_id",
-                                site = "site_id"
+                                site = "site_id",
+                                jour = c("session_id", "session_date")
   )
   
   
@@ -99,9 +109,10 @@ tableau_participation <- function(df_vn,
     # Grouper par année
     group_by_at(group_variable) %>%
     # Compter le nombre de participants uniques 
-    summarise(nb_variable = n_distinct(!!sym(col_count_variable))) %>%
+    summarise(nb_variable = n_distinct(!!!rlang::syms(col_count_variable))) %>%
     # Transformer en data.frame
     as.data.frame() 
+  
   
   # rename variable
   
