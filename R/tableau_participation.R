@@ -44,16 +44,16 @@ pretty_names = FALSE
 #' Créer un tableau de participation
 #'
 #' @param df_vn a dataframe
-#' @param count_variable 
-#' @param by_year 
-#' @param by_month 
-#' @param by_day 
-#' @param add_week 
-#' @param add_school_year 
-#' @param group_variable 
-#' @param col_date 
-#' @param col_count_variable 
-#' @param pretty_names 
+#' @param count_variable the variable to count can be session, user, site
+#' @param by_year group by year (stored in one column with month and/or day)
+#' @param by_month  group by month (stored in one column with year and/or day)
+#' @param by_day  group by day (stored in one column with month and/or year)
+#' @param add_week group by week number (stored in a separated column)
+#' @param add_school_year group by week number (stored in a separated column)
+#' @param group_variable add a grouping variable (stored in a separated column)
+#' @param col_date choose the date column
+#' @param col_count_variable choose the column of the variable to count
+#' @param pretty_names get pretty names
 #' 
 #' #' @description
 #' Cette fonction permet de generer un tableau de participation
@@ -63,7 +63,23 @@ pretty_names = FALSE
 #' @export
 #'
 #' @examples
-fct_tableau_participation <- function(df_vn,
+#' #' lapply(file.path("R", dir("R")), source)
+#' aspifaune <- download_from_ftp("export_qubs_aspifaune.csv")
+#' df_participation_aspifaune <- fct_tableau_participation(df_vn = aspifaune,
+#'                                                         pretty_names = FALSE)
+#' fct_tableau_participation(aspifaune)
+#'
+#' fct_tableau_participation(aspifaune,  by_year = FALSE, by_month = TRUE)
+#'
+#' fct_tableau_participation(aspifaune, count_variable = 'site',  by_year = FALSE, by_month = TRUE)
+#'
+#' fct_tableau_participation(aspifaune, count_variable = 'user')
+#'
+#' res <- fct_tableau_participation(aspifaune, by_year = FALSE, add_school_year = TRUE)
+#' res$school_year <- label_school_year(res$school_year)
+#' res
+
+tableau_participation <- function(df_vn,
                                       count_variable = 'session',
                                       by_year = TRUE,
                                       by_month = FALSE,
@@ -135,10 +151,7 @@ fct_tableau_participation <- function(df_vn,
   if(pretty_names){
     colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("nb_", count_variable)
   } else {
-    colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("Nombre de ", count_variable)
+    colnames(df_participation)[colnames(df_participation) == "nb_variable"] <- paste0("Nombre de ", count_variable, "s")
   }
-  
-  
   return(df_participation)
 }
-
