@@ -26,11 +26,11 @@ fct_tableau_participation <- function(df_vn,
   
   df_participation = df_vn %>%
     # Créer une colonne année
-    dplyr::mutate(session_year = strftime(!!sym(col_date), "%Y")) %>%
+    dplyr::mutate(session_year = strftime(!!dplyr::sym(col_date), "%Y")) %>%
     # Grouper par année
     dplyr::group_by(session_year) %>%
     # Compter le nombre de participants uniques 
-    dplyr::summarise(nparticipants = n_distinct(!!sym(col_user))) %>%
+    dplyr::summarise(nparticipants = n_distinct(!!dplyr::sym(col_user))) %>%
     # Transformer en data.frame
     as.data.frame() 
   
