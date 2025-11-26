@@ -35,8 +35,10 @@ list_ftp_files <- function(chemin = "") {
   # Filtrer pour enlever les éléments de navigation (., .., etc.)
   fichiers <- fichiers[!fichiers %in% c(".", "..", "../")]
   #ne garder que les fichiers csv commençant par export_
-  fichiers <- subset(grepl("export_"),fichiers) 
-  fichiers <- subset(grepl(".csv"),fichiers) 
+
+  fichiers <- subset(fichiers,grepl("export_",fichiers)) 
+  fichiers <- subset(fichiers,grepl(".csv",fichiers)) 
+
   
   return(fichiers)
 }
