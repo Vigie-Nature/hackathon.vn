@@ -20,7 +20,7 @@ plot_evol_stacke_nouveau_ancien = function(df_vn, site_ou_participant, time) {
   
   # df calculant la première fois que le site ou que le participant est présent 
   # dans le jeu de données
-  dt_first_time = dt %>%
+  dt_first_time = df_vn %>%
     dplyr::group_by(!!sym(site_ou_participant)) %>%
     dplyr::reframe(first_time = min(!!sym(time))) %>%
     dplyr::ungroup() %>%
@@ -30,7 +30,7 @@ plot_evol_stacke_nouveau_ancien = function(df_vn, site_ou_participant, time) {
     dplyr::ungroup()
   
   # calcul nombre nouvelles mentions en anciennes mentions aux différentes dates
-  dt_plot_turnover = dt %>%
+  dt_plot_turnover = df_vn %>%
     dplyr::group_by(!!sym(time)) %>%
     dplyr::reframe(nb = n_distinct(!!sym(site_ou_participant))) %>%
     dplyr::ungroup() %>%
