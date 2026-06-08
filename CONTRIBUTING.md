@@ -37,6 +37,7 @@ We use the [Tidyverse style guide](https://style.tidyverse.org/) for writing R
 code. Functions are documented with the 
 [roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html) syntax. 
 `hackathon.vn` uses the `lower_snake_case`.
+Par défaut les fichiers issus des exports peuvent être nommés `df_vn`
 
 
 
